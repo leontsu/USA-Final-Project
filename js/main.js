@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
         // これから操作するHTML要素を、idを元に探し出して変数に格納しておく。
@@ -45,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (distance_SHONANDAI <= MAX_DISTANCE_M) {
                 displayLocation.textContent = "現在地は湘南台です";
                 displayLocation.style.color = "green";
+                //StartAnalysis();
             } 
             else if(distance_SFC <= MAX_DISTANCE_M)
             {
@@ -138,5 +137,4 @@ document.addEventListener('DOMContentLoaded', () => {
                 commentText.textContent = '今日は快晴です。快適なバス通学になるでしょう。';
             }, 2000); // 2000ミリ秒 = 2秒後
         });
-
 });
