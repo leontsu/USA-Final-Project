@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SFC生遅刻判定サービス</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header>
@@ -48,11 +50,12 @@
             </div>
 
             <div id="prediction-output">
-                 <h3>予測</h3>
+                <h3>予測</h3>
                 <p><strong>予測到達時間:</strong> <span id="predicted-time">--:--</span></p>
                 <div class="risk-level">
                     <strong>遅刻危険度:</strong>
-                    <span id="risk-display">?</span> </div>
+                    <span id="risk-display">?</span>
+                </div>
                 <div id="gpt-comment">
                     <h4>【GPTからの一言】 </h4>
                     <p id="comment-text">予測待機中...</p>
@@ -66,5 +69,10 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/processcontrol.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/gpt.js"></script>
 </body>
+
 </html>
