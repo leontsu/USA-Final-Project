@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFC生 遅刻判定サービス</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        section,
+        table {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .danger {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SFC生 遅刻判定サービス</h1>
+    <p>湘南台から通学するSFC生のための、AIによる遅刻リスク予測システムです。</p>
+
+    <form id="user-form">
+        <label for="username">ユーザー名:</label>
+        <input type="text" id="username" name="username" placeholder="KEIO TARO">
+
+        <label for="class">今日の講義:</label>
+        <select id="class" name="class" required>
+            <option value="" disabled selected>時限を選択してください</option>
+            <option value="1限">1限 (9:25〜)</option>
+            <option value="2限">2限 (11:10〜)</option>
+            <option value="3限">3限 (13:00〜)</option>
+            <option value="4限">4限 (14:45〜)</option>
+            <option value="5限">5限 (16:30〜)</option>
+            <option value="6限">6限 (18:15〜)</option>
+        </select>
+
+        <button type="submit" id="predict-button">予測 </button>
+    </form>
+
+    <section id="result" style="display: none;">
+        <h2>予測結果</h2>
+        <p><strong>現在位置:</strong> <span id="display-location"></span></p>
+        <p><strong>現在の天気:</strong> <span id="display-weather"></span></p>
+        <p><strong>予測到達時間:</strong> <span id="predicted-time"></span></p>
+        <p><strong>遅刻危険度:</strong> <span id="risk-display"></span></p>
+        <p><strong>GPTからの一言:</strong> <span id="comment-text"></span></p>
+    </section>
+
+    <section>
+        <h2>システムの設計</h2>
+        <ul>
+            <li>GPSでユーザーの湘南台駅到着を検知</li>
+            <li>曜日、時間、天候データを取得し、AIがSFCまでの所要時間を計算</li>
+            <li>所要時間と講義開始時間を比較し、遅刻の危険度を表示</li>
+            <li>ユーザーのSFC到着をGPSで検知し、データとして蓄積</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>ターゲット</h2>
+        <p>湘南台からバスを利用して通学するSFC生（特に遅刻が多い学生）</p>
+
+        <h2>提供する価値</h2>
+        <ul>
+            <li>間に合いそうな学生に安心感を与える</li>
+            <li>遅刻しそうな学生を焦らせる</li>
+            <li>天候や曜日に応じた所要時間の事前予測により、遅刻を減らす</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>スケジュール</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>週</th>
+                    <th>日程</th>
+                    <th>To-do</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>第1週</td>
+                    <td>6/13~6/19</td>
+                    <td>役割分担・最低限のHTML制作</td>
+                </tr>
+                <tr>
+                    <td>第2週</td>
+                    <td>6/20~6/26</td>
+                    <td>GPSによる到着検知・テスト</td>
+                </tr>
+                <tr>
+                    <td>第3週</td>
+                    <td>6/27~7/3</td>
+                    <td>API実装（ChatGPT・天気）とDB構築</td>
+                </tr>
+                <tr>
+                    <td>第4週</td>
+                    <td>7/4~7/10</td>
+                    <td>予測機能の構築・データ蓄積開始</td>
+                </tr>
+                <tr>
+                    <td>第5週</td>
+                    <td>7/11~7/17</td>
+                    <td>データ精度向上・デバッグ</td>
+                </tr>
+                <tr>
+                    <td>第6週</td>
+                    <td>7/18~7/24</td>
+                    <td>動作確認・ブラッシュアップ・発表準備</td>
+                </tr>
+                <tr>
+                    <td>発表日</td>
+                    <td>7/25</td>
+                    <td>最終発表</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <footer>
+        <p>&copy; 2025ユビキタスグループ8</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/processcontrol.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/gpt.js"></script>
+</body>
+
+</html>
+
+
+
+</html>
