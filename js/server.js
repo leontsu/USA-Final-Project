@@ -1,0 +1,74 @@
+import fs from 'fs';
+const historicalRecords = JSON.parse(
+  fs.readFileSync('data/sample.json', 'utf8')
+)
+
+import dotenv from "dotenv";
+dotenv.config();
+import OpenAI from "openai";
+import express from "express";
+import cors from "cors";
+
+const app = express();
+const port = 3000;
+
+app.use(cors());
+app.use(express.json());
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+// Use this for production - avoids CORS errors
+// app.use(cors({
+//     origin: ["https://your-frontend.example.com"],
+//     methods: ["POST"],
+//     allowedHeaders: ["Content-Type", "Authorization"]
+//   }));
+
+
+// This code: Station --> SFC
+async function getEta({ weather, period, userTime }) {
+  const messages = [
+    {
+      role: "system",
+      content: `You are “SFC‑Punctuality‑Predictor,” an expert travel‑time forecaster for students commuting to Keio SFC.
+                • Goal: Using the current weather, comparable historical commute records, the current time (userTime) and the target class period, estimate:
+                  – The ETA (arrival time at SFC) in 24‑hour “HH:MM” format.
+                  – A qualitative lateness‑risk level ("低", "中", or "危").
+                  – A short, actionable comment in Japanese (≤ 50 characters).
+                • Output must be a single JSON object that matches this exact schema:
+                  { "ETA": "HH:MM", "risk": "低|中|危", "comment": "string" }
+                • Think through the data silently; do NOT include your reasoning—only return the JSON object.
+                • If any required field is missing or malformed, respond with:
+                  { "error": "説明文" }`
+    },
+    {
+      role: "user",
+      content: JSON.stringify({ weather, historicalRecords, period, userTime })
+    }
+  ];
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4.1",
+    response_format: { type: "json_object" },
+    messages
+  });
+  return completion.choices[0].message.content;
+}
+
+app.post('/api/gpt', async (req, res) => {
+  try {
+    const { weather, period, userTime } = req.body;
+    if (!weather || !period || !userTime) {
+      return res.status(400).json({ error: "Missing required fields: weather, period, userTime" });
+    }
+    const response = await getEta({ weather, period, userTime });
+    return res.json({ response });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+}); 
