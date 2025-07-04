@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const MAX_DISTANCE_M = 500; // 湘南台・慶應大学とみなす半径
 
+    let username;
+    let classPeriod;
+
 
 
 
@@ -51,8 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         resultsSection.style.display = 'block'; // style属性のdisplayを'none'から'block'に変える
 
         // 2. ユーザーの入力値を取得
-        const username = document.getElementById('username').value;
-        const classPeriod = document.getElementById('class').value;
+        username = document.getElementById('username').value;
+        classPeriod = document.getElementById('class').value;
         console.log(`ユーザー名: ${username}, 講義: ${classPeriod}限`); // コンソールに表示して確認
 
         // 3. APIからの応答を待っている間、一時的なメッセージを表示する
@@ -92,17 +95,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (distance_SHONANDAI <= MAX_DISTANCE_M) {
             displayLocation.textContent = "現在地は湘南台です";
             displayLocation.style.color = "green";
-            ShonandaiFlow(); //processcontrolに処理を引き継ぐ
+            ShonandaiFlow(username, classPeriod); //processcontrolに処理を引き継ぐ
         }
         else if (distance_SFC <= MAX_DISTANCE_M) {
             displayLocation.textContent = "現在地はSFCです";
             displayLocation.style.color = "green";
-            SFCFlow(); //processcontrolに処理を引き継ぐ
+            SFCFlow(username, classPeriod); //processcontrolに処理を引き継ぐ
         }
         else {
             displayLocation.textContent = "現在地は湘南台またはSFCではありません";
             displayLocation.style.color = "red";
-            TestFlow();
+            TestFlow(username, classPeriod);
         }
     }
 

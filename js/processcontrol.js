@@ -1,12 +1,14 @@
 import { GetWeatherFromAPI } from "./api.js";
+import {GetCurrentTime} from "./time.js"
 import { gptResponse } from "./gpt.js";
 
 
 //ここでは湘南台についたとき、SFCについたときそれぞれの処理がまとめて管理されます
-export async function TestFlow() {
+export async function TestFlow(username, classPeriod) {
     console.log("これはテスト用");
-    let weatherToday;
 
+    //api.jsによる天気検索
+    let weatherToday;
     try {
         weatherToday = await GetWeatherFromAPI();
         console.log(weatherToday);
@@ -15,12 +17,23 @@ export async function TestFlow() {
         return;
     }
 
-    // Sample Data（将来的にはここを編集）
+    //time.jsによる時刻と曜日取得
+    let timeNow;
+    try {
+        timeNow = await GetCurrentTime();
+        console.log(timeNow);
+    } catch (error) {
+        console.error("時間の取得に失敗しました", error);
+        return;
+    }
+
+
     const payload = {
         "weather": weatherToday,
-        "period": "2",
-        "userTime": "08:10"
+        "period": classPeriod,
+        "userTime": timeNow,
     }
+    console.log(payload);
 
     // 最終的のOpenAI APIからのResponse
     // paramter in gptResponse() --> { weather, period, userTime }
@@ -29,7 +42,7 @@ export async function TestFlow() {
     console.log(gptResult);
 }
 
-export async function ShonandaiFlow() {
+export async function ShonandaiFlow(username, classPeriod) {
     console.log("main.htmlから、位置情報が湘南台だったので、ShonandaiFlowが呼び出されました");
 
     //api.jsを呼ぶ
@@ -59,7 +72,7 @@ export async function ShonandaiFlow() {
     //gpt.jsを呼ぶ
 }
 
-export async function SFCFlow() {
+export async function SFCFlow(username, classPeriod) {
     console.log("main.htmlから、位置情報がSFCだったので、SFCFlowが呼び出されました");
     //api.jsを呼ぶ
     try {
