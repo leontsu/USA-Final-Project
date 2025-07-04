@@ -1,7 +1,13 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// この3行で、server.jsの場所を基準に絶対パスを生成します
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const historicalRecords = JSON.parse(
-  fs.readFileSync('data/sample.json', 'utf8')
-)
+  fs.readFileSync(path.join(__dirname, '../data/sample.json'), 'utf8')
+);
 
 import dotenv from "dotenv";
 dotenv.config();
