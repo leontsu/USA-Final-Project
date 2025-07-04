@@ -1,0 +1,4 @@
+[
+    { "day": "Monday", "weather": "Rain", "duration": 25 },
+    { "day": "Tuesday", "weather": "Clear", "duration": 20 }
+  ]
