@@ -85,27 +85,34 @@ app.post('/api/gpt', async (req, res) => {
   try {
     const { weather, period, userTime } = req.body;
     if (!weather || !period || !userTime) {
-      return res.status(400).json({ error: "Missing required fields: weather, period, userTime" });
+      return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // GPTからのレスポンス(文字列)を取得
     const gptResponseString = await getEta({ weather, period, userTime });
 
-    // GPTがエラー文字列を返してきた場合の処理
-    if (typeof gptResponseString === 'string' && gptResponseString.startsWith("error:")) {
-      // "error:" 以降のメッセージ部分を取得
-      const errorMessage = gptResponseString.substring(6);
-      // 指定の形式に整形して返す
-      return res.json({ comment: `エラーが発生しました。${errorMessage}` });
+    // --- ここからが修正箇所 ---
+    try {
+      // まずはJSONとして扱えるか試す
+      const response = JSON.parse(gptResponseString);
+      return res.json(response); // 成功すればそのまま返す
+    } catch (parseError) {
+      // JSON.parse()が失敗した場合 (GPTがプレーンな文字列を返した場合)
+      // gptResponseStringをそのままエラーメッセージとして利用する
+      console.log("GPTがJSONではない文字列を返したため、整形します:", gptResponseString);
+      return res.json({
+        ETA: "00:00",
+        risk: "エラー",
+        comment: `エラーが発生しました。${gptResponseString}`
+      });
     }
+    // --- ここまで ---
 
-
-    const response = JSON.parse(gptResponseString);
-    return res.json( response );
   } catch (err) {
+    // OpenAIのAPIキーが違うなど、根本的なエラー
     return res.status(500).json({ error: err.message });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
