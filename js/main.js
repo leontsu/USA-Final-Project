@@ -1,6 +1,4 @@
-import { TestFlow, ShonandaiFlow, SFCFlow } from "./processcontrol.js"; 
-
-//htmlページとの連携、結果出力、位置判定を行う。
+import { TestFlow, ShonandaiFlow, SFCFlow } from "./processcontrol.js";
 import { gptResponse } from "./gpt.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
