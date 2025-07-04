@@ -5,7 +5,7 @@ export async function gptResponse(payload) {
   }
 
   try { // <-- ここから追加
-    const res = await fetch('https://lazyta-toru.net/api/gpt',{ // URLはこれでOKです
+    const res = await fetch('/api/gpt',{ // URLはこれでOKです
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
