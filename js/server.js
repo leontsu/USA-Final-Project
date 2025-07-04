@@ -80,7 +80,6 @@ async function getEta({ weather, period, userTime }) {
   });
   return completion.choices[0].message.content;
 }
-
 app.post('/api/gpt', async (req, res) => {
   try {
     const { weather, period, userTime } = req.body;
@@ -88,28 +87,34 @@ app.post('/api/gpt', async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // Get the raw string response from GPT
     const gptResponseString = await getEta({ weather, period, userTime });
 
-    // --- ここからが修正箇所 ---
+    // Check if the string is valid JSON before parsing
+    let responseData;
     try {
-      // まずはJSONとして扱えるか試す
-      const response = JSON.parse(gptResponseString);
-      return res.json(response); // 成功すればそのまま返す
-    } catch (parseError) {
-      // JSON.parse()が失敗した場合 (GPTがプレーンな文字列を返した場合)
-      // gptResponseStringをそのままエラーメッセージとして利用する
-      console.log("GPTがJSONではない文字列を返したため、整形します:", gptResponseString);
+      responseData = JSON.parse(gptResponseString);
+    } catch (e) {
+      // If JSON.parse fails, it means GPT sent a plain or broken string.
+      // We will treat this string as the error comment.
+      console.error("GPT returned a non-JSON string:", gptResponseString);
       return res.json({
         ETA: "00:00",
         risk: "エラー",
-        comment: `エラーが発生しました。${gptResponseString}`
+        comment: gptResponseString
       });
     }
-    // --- ここまで ---
+
+    // If parsing was successful, send the data
+    return res.json(responseData);
 
   } catch (err) {
-    // OpenAIのAPIキーが違うなど、根本的なエラー
-    return res.status(500).json({ error: err.message });
+    // This now only catches major errors like OpenAI API key issues
+    return res.status(500).json({
+      ETA: "00:00",
+      risk: "エラー",
+      comment: `サーバーで致命的なエラーが発生しました: ${err.message}`
+    });
   }
 });
 
