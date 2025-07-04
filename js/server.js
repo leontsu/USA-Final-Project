@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const historicalRecords = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../data/sample.json'), 'utf8')
+  fs.readFileSync(path.join(__dirname, '..', 'data', 'sample.json'), 'utf8')
 );
 
 import dotenv from "dotenv";
