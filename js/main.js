@@ -1,3 +1,5 @@
+import { TestFlow, ShonandaiFlow, SFCFlow } from "./processcontrol.js"; 
+
 //htmlページとの連携、結果出力、位置判定を行う。
 import { gptResponse } from "./gpt.js";
 
@@ -116,6 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         else {
             displayLocation.textContent = "現在地は湘南台またはSFCではありません";
             displayLocation.style.color = "red";
+            TestFlow();
         }
     }
 

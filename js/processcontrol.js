@@ -1,6 +1,17 @@
-//ここでは湘南台についたとき、SFCについたときそれぞれの処理がまとめて管理されます
+import { GetWeatherFromAPI } from "./api.js"; 
 
-async function ShonandaiFlow() {
+//ここでは湘南台についたとき、SFCについたときそれぞれの処理がまとめて管理されます
+export async function TestFlow(){
+    console.log("これはテスト用");
+    try {
+        const weatherToday = await GetWeatherFromAPI();
+        console.log(weatherToday); 
+    } catch (error) {
+        console.error("天気の取得に失敗しました", error);
+    }
+}
+
+export async function ShonandaiFlow() {
     console.log("main.htmlから、位置情報が湘南台だったので、ShonandaiFlowが呼び出されました");
 
     //api.jsを呼ぶ
@@ -30,7 +41,7 @@ async function ShonandaiFlow() {
     //gpt.jsを呼ぶ
 }
 
-async function SFCFlow() {
+export async function SFCFlow() {
     console.log("main.htmlから、位置情報がSFCだったので、SFCFlowが呼び出されました");
     //api.jsを呼ぶ
     try {

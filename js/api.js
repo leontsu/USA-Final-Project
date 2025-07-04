@@ -1,5 +1,5 @@
 //亀井の担当　open Weather APIなど
-function GetWeatherFromAPI() {
+export function GetWeatherFromAPI() {
     console.log("天気を検索中");
     const apiKey = 'c470e678f1dab928aa51dbb7e8a9d6d2';
 
