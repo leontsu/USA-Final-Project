@@ -112,26 +112,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(allResult);
 
 
-        if (allResult && allResult.gptResult) { 
+        if (allResult && allResult.gptResult) {
             displayWeather.textContent = allResult.weather || '取得失敗';
             predictedTime.textContent = allResult.gptResult.ETA || '計算失敗';
             riskDisplay.textContent = allResult.gptResult.risk || '不明';
-            if (allResult.gptResult.comment) {
-                // commentキーがあれば、その内容を displayText に設定
+
+            // リスクがエラーを示しているかを確認
+            if (allResult.gptResult.risk === 'エラー') {
+                // エラーの場合は、'comment'フィールドからのエラーメッセージを表示
+                commentText.textContent = allResult.gptResult.comment || 'エラーが発生しましたが、詳細なコメントはありません。';
+                riskDisplay.style.color = 'orange'; // 必要に応じてエラー表示の色を変更
+            } else if (allResult.gptResult.comment) {
+                // エラーでなく、コメントが存在する場合は、通常のコメントを表示
                 commentText.textContent = allResult.gptResult.comment;
-            } 
-            else if (allResult.gptResult.error) {
-                // commentキーがなくて、errorキーがあれば、その内容を displayText に設定
-                commentText.textContent = allResult.gptResult.error;
-            }
-            else{
-                commentText.textContent ='コメントはありません。';
+            } else {
+                // コメントが提供されない場合のフォールバック
+                commentText.textContent = 'コメントはありません。';
             }
 
-            // 遅刻危険度に応じて色を変えるなどの処理
+            // 遅刻危険度に応じた色の調整（エラーでない場合）
             if (allResult.gptResult.risk === '危') {
                 riskDisplay.style.color = 'red';
-            } else {
+            } else if (allResult.gptResult.risk !== 'エラー') {
+                // '危'でも'エラー'でもない場合のみ緑色に設定
                 riskDisplay.style.color = 'green';
             }
         }
