@@ -39,7 +39,7 @@ export async function TestFlow(username, classPeriod) {
     // paramter in gptResponse() --> { weather, period, userTime }
     console.log("GPTが考え中！")
     const raw = await gptResponse(payload); // Promiseを解決
-    const gptResult = JSON.parse(raw);
+    const gptResult = raw;
     console.log(gptResult);
 
     const allresult = {
