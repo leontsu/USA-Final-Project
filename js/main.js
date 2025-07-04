@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(allResult);
 
 
-        if (allResult) {
+        if (allResult && allResult.gptResult) { 
             displayWeather.textContent = allResult.weather || '取得失敗';
             predictedTime.textContent = allResult.gptResult.ETA || '計算失敗';
             riskDisplay.textContent = allResult.gptResult.risk || '不明';
