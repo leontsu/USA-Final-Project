@@ -18,7 +18,6 @@ import cors from "cors";
 const app = express();
 const port = 3000;
 
-// app.use(cors()); // ← こちらをコメントアウト
 app.use(express.json());
 
 //開発環境ではここをコメントアウト
@@ -27,19 +26,18 @@ app.use(cors({
     methods: ["POST"],
     allowedHeaders: ["Content-Type"]
   }));
-
-  
+//開発環境の時のコメントアウトはここまで
 
   /*本番環境ではここをコメントアウト
 const corsOptions = {
   origin: 'http://127.0.0.1:5500' // 開発用フロントエンドのオリジンを許可
-};*/
-
+};
 app.use(cors(corsOptions));
-app.use(express.json());
-
-
+*/
 //コメントアウトはここまで
+
+
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
