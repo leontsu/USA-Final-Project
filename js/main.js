@@ -1,6 +1,22 @@
 //htmlページとの連携、結果出力、位置判定を行う。
+import { gptResponse } from "./gpt.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // Sample Data
+    const payload = {
+        "weather": {
+            "description": "Rain",
+            "temperature": 22
+        },
+        "period": "2",
+        "userTime": "08:10"
+    }
+
+    // 最終的のOpenAI APIからのResponse
+    // paramter in gptResponse() --> { weather, period, userTime }
+    const gptResult = await gptResponse(payload);
+    console.log(gptResult);
 
     // これから操作するHTML要素を、idを元に探し出して変数に格納しておく。
     const userForm = document.getElementById('user-form');
