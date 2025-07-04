@@ -1,4 +1,4 @@
-import { TestFlow, ShonandaiFlow, SFCFlow } from "./processcontrol.js";
+import { TestFlow, ShonandaiFlow, SFCFlow } from "./processcontroller.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
