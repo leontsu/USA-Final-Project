@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             displayWeather.textContent = allResult.weather || '取得失敗';
             predictedTime.textContent = allResult.gptResult.ETA || '計算失敗';
             riskDisplay.textContent = allResult.gptResult.risk || '不明';
-            commentText.textContent = allResult.gptResult.comment || allResult.gptResult.error||'コメントはありません。';
+            commentText.textContent = allResult.gptResult.comment ||allResult.gptResult.error ||'コメントはありません。';
 
             // 遅刻危険度に応じて色を変えるなどの処理
             if (allResult.risk === '危') {
