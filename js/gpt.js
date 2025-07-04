@@ -5,10 +5,10 @@ export async function gptResponse(payload) {
     throw new Error("gptResponse expects an object payload");
   }
   //本番環境ではこちら
-  //const res = await fetch('/app/api/gpt', {
+  const res = await fetch('/app/api/gpt', {
 
   //開発環境ではこちら
-  const res = await fetch('http://localhost:3000/api/gpt',{
+  //const res = await fetch('http://localhost:3000/api/gpt',{
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

@@ -21,20 +21,19 @@ const port = 3000;
 // app.use(cors()); // ← こちらをコメントアウト
 app.use(express.json());
 
-/*開発環境ではここをコメントアウト
-// Use this for production - avoids CORS errors
+//開発環境ではここをコメントアウト
 app.use(cors({
     origin: ["https://lazyta-toru.net"], // ← あなたのサイトのドメイン名を指定
     methods: ["POST"],
     allowedHeaders: ["Content-Type"]
   }));
 
-  */
+  
 
-  //本番環境ではここをコメントアウト
+  /*本番環境ではここをコメントアウト
 const corsOptions = {
   origin: 'http://127.0.0.1:5500' // 開発用フロントエンドのオリジンを許可
-};
+};*/
 
 app.use(cors(corsOptions));
 app.use(express.json());
