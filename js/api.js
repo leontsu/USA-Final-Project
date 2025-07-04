@@ -1,0 +1,1 @@
+//亀井の担当　open Weather APIなど

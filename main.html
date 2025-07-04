@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFC生遅刻判定サービス</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>SFC生遅刻判定サービス </h1>
+    </header>
+
+    <main>
+        <section id="input-section">
+            <h2>情報入力</h2>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="username">ユーザ名:</label>
+                    <input type="text" id="username" name="username" placeholder="例: KEIO TARO" required>
+                </div>
+                <div class="form-group">
+                    <label for="class-period">今日の講義:</label>
+                    <select id="class-period" name="class-period" required>
+                        <option value="" disabled selected>時限を選択してください</option>
+                        <option value="1">1限 (9:25~)</option>
+                        <option value="2">2限 (11:10~)</option>
+                        <option value="3">3限 (13:00~)</option>
+                        <option value="4">4限 (14:45~)</option>
+                        <option value="5">5限 (16:30~)</option>
+                        <option value="6">6限 (18:15~)</option>
+                    </select>
+                </div>
+                <button type="submit" id="predict-button">予測 </button>
+            </form>
+        </section>
+
+        <hr>
+
+        <section id="results-section" style="display: none;">
+            <h2>予測結果</h2>
+
+            <div id="current-status">
+                <h3>現在の状況</h3>
+                <p><strong>現在位置:</strong> <span id="display-location">（GPSで取得中...）</span></p>
+                <p><strong>現在の天気:</strong> <span id="display-weather">（APIで取得中...）</span></p>
+            </div>
+
+            <div id="prediction-output">
+                <h3>予測</h3>
+                <p><strong>予測到達時間:</strong> <span id="predicted-time">--:--</span></p>
+                <div class="risk-level">
+                    <strong>遅刻危険度:</strong>
+                    <span id="risk-display">?</span>
+                </div>
+                <div id="gpt-comment">
+                    <h4>【GPTからの一言】 </h4>
+                    <p id="comment-text">予測待機中...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025ユビキタスグループ8</p>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/processcontrol.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/database.js"></script>
+    <script type="module" src="js/gpt.js"></script>
+</body>
+
+</html>
