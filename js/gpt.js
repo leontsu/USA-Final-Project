@@ -13,8 +13,8 @@ export async function gptResponse(payload) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error);
-  return data.response;
+  const data = await res.json(); // ここでサーバーからのJSON応答全体が'data'に格納される
+  if (!res.ok) throw new Error(data.error); // サーバーがエラーを返した場合のチェック
+  return data; 
 }
 
