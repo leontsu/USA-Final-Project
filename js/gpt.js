@@ -8,7 +8,7 @@ export async function gptResponse(payload) {
   //const res = await fetch('/app/api/gpt', {
 
   //本番環境ではこちら
-  const res = await fetch('http://lazyta-toru.net:3000/api/gpt',{
+  const res = await fetch('https://lazyta-toru.net:3000/api/gpt',{
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
