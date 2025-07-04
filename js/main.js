@@ -116,10 +116,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             displayWeather.textContent = allResult.weather || '取得失敗';
             predictedTime.textContent = allResult.gptResult.ETA || '計算失敗';
             riskDisplay.textContent = allResult.gptResult.risk || '不明';
-            commentText.textContent = allResult.gptResult.comment ||allResult.gptResult.error ||'コメントはありません。';
+            if (gptResult.comment) {
+                // commentキーがあれば、その内容を displayText に設定
+                commentText.textContent = gptResult.comment;
+            } 
+            else if (gptResult.error) {
+                // commentキーがなくて、errorキーがあれば、その内容を displayText に設定
+                commentText.textContent = gptResult.error;
+            }
+            else{
+                commentText.textContent ='コメントはありません。';
+            }
 
             // 遅刻危険度に応じて色を変えるなどの処理
-            if (allResult.risk === '危') {
+            if (allResult.gptResult.risk === '危') {
                 riskDisplay.style.color = 'red';
             } else {
                 riskDisplay.style.color = 'green';
