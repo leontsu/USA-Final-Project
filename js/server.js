@@ -12,8 +12,16 @@ import cors from "cors";
 const app = express();
 const port = 3000;
 
-app.use(cors());
+// app.use(cors()); // ← こちらをコメントアウト
 app.use(express.json());
+
+// Use this for production - avoids CORS errors
+app.use(cors({
+    origin: ["https://lazyta-toru.net"], // ← あなたのサイトのドメイン名を指定
+    methods: ["POST"],
+    allowedHeaders: ["Content-Type"]
+  }));
+//...
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
