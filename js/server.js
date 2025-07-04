@@ -61,8 +61,8 @@ async function getEta({ weather, period, userTime }) {
     {
       role: "system",
       content: `You are “SFC‑Punctuality‑Predictor,” an expert travel‑time forecaster for students commuting to Keio SFC.
-                • Goal: Using the current weather, comparable historical commute records, the current time (userTime) and the target class period.
-                
+                • Goal: Using the current weather(weather), comparable historical commute records, the current time and day of the week (userTime) and the target class period(period).
+
                 Start time of each period is as follows:
                 Period1 9:25~
                 Period2 11:10~
@@ -80,7 +80,7 @@ async function getEta({ weather, period, userTime }) {
                   { "ETA": "HH:MM", "risk": "低|中|危", "comment": "string" }
                 • Think through the data silently; do NOT include your reasoning—only return the JSON object.
                 • If any required field is missing or malformed, respond with:
-                  { "error": "説明文" }`
+                  { "comment": "エラーが発生しました。{説明文はここ}" }`
     },
     {
       role: "user",

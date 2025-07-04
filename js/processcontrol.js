@@ -1,5 +1,5 @@
 import { GetWeatherFromAPI } from "./api.js";
-import {GetCurrentTime} from "./time.js"
+import { GetCurrentTime } from "./time.js"
 import { gptResponse } from "./gpt.js";
 
 
@@ -38,9 +38,19 @@ export async function TestFlow(username, classPeriod) {
     // 最終的のOpenAI APIからのResponse
     // paramter in gptResponse() --> { weather, period, userTime }
     console.log("GPTが考え中！")
-    const gptResult = await gptResponse(payload);
+    const raw = await gptResponse(payload); // Promiseを解決
+    const gptResult = JSON.parse(raw);
     console.log(gptResult);
+
+    const allresult = {
+        "weather": weatherToday,
+        "gptResult": gptResult,
+    }
+    return allresult;
 }
+
+
+
 
 export async function ShonandaiFlow(username, classPeriod) {
     console.log("main.htmlから、位置情報が湘南台だったので、ShonandaiFlowが呼び出されました");

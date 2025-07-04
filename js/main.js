@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
+
     const displayWeather = document.getElementById('display-weather');
     const predictedTime = document.getElementById('predicted-time');
     const riskDisplay = document.getElementById('risk-display');
@@ -39,8 +40,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     userForm.addEventListener('submit', async (event) => {
 
+
         // formのデフォルトの送信機能を無効にする（ページがリロード防止）
         event.preventDefault();
+
 
         if ("geolocation" in navigator) {
             // 現在地を取得する
@@ -70,11 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         //    ※ 今後はここにAPIなどの処理を追加
         setTimeout(() => {
             // ここで、取得したデータでHTMLを書き換える
-            displayWeather.textContent = '晴れ';
-            predictedTime.textContent = '9:15';
-            riskDisplay.textContent = '安';
-            riskDisplay.style.color = 'green'; // スタイル（文字色）も変更
-            commentText.textContent = '今日は快晴です。快適なバス通学になるでしょう。';
+
         }, 2000); // 2000ミリ秒 = 2秒後
     });
 
@@ -82,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     /**
  * @param {GeolocationPosition} position ブラウザから取得した位置情報
  */
-    function checkIfInShonandai(position) {
+    async function checkIfInShonandai(position) {
         const userLat = position.coords.latitude;
         const userLon = position.coords.longitude;
 
@@ -91,21 +90,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         const distance_SFC = getDistance(userLat, userLon, SFC_LAT, SFC_LON);
 
 
+
+        let allResult;
+
         // 4. 距離に基づいて判定し、結果を表示
         if (distance_SHONANDAI <= MAX_DISTANCE_M) {
             displayLocation.textContent = "現在地は湘南台です";
             displayLocation.style.color = "green";
-            ShonandaiFlow(username, classPeriod); //processcontrolに処理を引き継ぐ
+            allResult = await ShonandaiFlow(username, classPeriod); //processcontrolに処理を引き継ぐ
         }
         else if (distance_SFC <= MAX_DISTANCE_M) {
             displayLocation.textContent = "現在地はSFCです";
             displayLocation.style.color = "green";
-            SFCFlow(username, classPeriod); //processcontrolに処理を引き継ぐ
+            allResult = await SFCFlow(username, classPeriod); //processcontrolに処理を引き継ぐ
         }
         else {
             displayLocation.textContent = "現在地は湘南台またはSFCではありません";
             displayLocation.style.color = "red";
-            TestFlow(username, classPeriod);
+            allResult = await TestFlow(username, classPeriod);
+        }
+        console.log(allResult);
+
+
+        if (allResult) {
+            displayWeather.textContent = allResult.weather || '取得失敗';
+            predictedTime.textContent = allResult.gptResult.ETA || '計算失敗';
+            riskDisplay.textContent = allResult.gptResult.risk || '不明';
+            commentText.textContent = allResult.gptResult.comment || 'コメントはありません。';
+
+            // 遅刻危険度に応じて色を変えるなどの処理
+            if (allResult.risk === '危') {
+                riskDisplay.style.color = 'red';
+            } else {
+                riskDisplay.style.color = 'green';
+            }
         }
     }
 
