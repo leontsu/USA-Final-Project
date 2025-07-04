@@ -116,13 +116,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             displayWeather.textContent = allResult.weather || '取得失敗';
             predictedTime.textContent = allResult.gptResult.ETA || '計算失敗';
             riskDisplay.textContent = allResult.gptResult.risk || '不明';
-            if (gptResult.comment) {
+            if (allResult.gptResult.comment) {
                 // commentキーがあれば、その内容を displayText に設定
-                commentText.textContent = gptResult.comment;
+                commentText.textContent = allResult.gptResult.comment;
             } 
-            else if (gptResult.error) {
+            else if (allResult.gptResult.error) {
                 // commentキーがなくて、errorキーがあれば、その内容を displayText に設定
-                commentText.textContent = gptResult.error;
+                commentText.textContent = allResult.gptResult.error;
             }
             else{
                 commentText.textContent ='コメントはありません。';
