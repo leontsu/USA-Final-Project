@@ -14,7 +14,7 @@ export async function TestFlow(username, classPeriod) {
         console.log(weatherToday);
     } catch (error) {
         console.error("天気の取得に失敗しました", error);
-        return;
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "天気の取得に失敗しました。" } };
     }
 
     //time.jsによる時刻と曜日取得
@@ -24,7 +24,7 @@ export async function TestFlow(username, classPeriod) {
         console.log(timeNow);
     } catch (error) {
         console.error("時間の取得に失敗しました", error);
-        return;
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "時間の取得に失敗しました。" } };
     }
 
 
@@ -38,15 +38,19 @@ export async function TestFlow(username, classPeriod) {
     // 最終的のOpenAI APIからのResponse
     // paramter in gptResponse() --> { weather, period, userTime }
     console.log("GPTが考え中！")
-    const raw = await gptResponse(payload); // Promiseを解決
-    const gptResult = raw;
-    console.log(gptResult);
+    try {
+        const gptResult = await gptResponse(payload); // Promiseを解決
+        console.log(gptResult);
 
-    const allresult = {
-        "weather": weatherToday,
-        "gptResult": gptResult,
+        const allresult = {
+            "weather": weatherToday,
+            "gptResult": gptResult,
+        }
+        return allresult;
+    } catch (error) {
+        console.error("GPTの応答取得に失敗しました", error);
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "GPTからの応答取得に失敗しました。" } };
     }
-    return allresult;
 }
 
 
@@ -66,7 +70,7 @@ export async function ShonandaiFlow(username, classPeriod) {
         console.log(weatherToday);
     } catch (error) {
         console.error("天気の取得に失敗しました", error);
-        return;
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "天気の取得に失敗しました。" } };
     }
 
     //time.jsによる時刻と曜日取得
@@ -76,7 +80,7 @@ export async function ShonandaiFlow(username, classPeriod) {
         console.log(timeNow);
     } catch (error) {
         console.error("時間の取得に失敗しました", error);
-        return;
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "時間の取得に失敗しました。" } };
     }
 
 
@@ -90,15 +94,19 @@ export async function ShonandaiFlow(username, classPeriod) {
     // 最終的のOpenAI APIからのResponse
     // paramter in gptResponse() --> { weather, period, userTime }
     console.log("GPTが考え中！")
-    const raw = await gptResponse(payload); // Promiseを解決
-    const gptResult = raw;
-    console.log(gptResult);
+    try {
+        const gptResult = await gptResponse(payload); // Promiseを解決
+        console.log(gptResult);
 
-    const allresult = {
-        "weather": weatherToday,
-        "gptResult": gptResult,
+        const allresult = {
+            "weather": weatherToday,
+            "gptResult": gptResult,
+        }
+        return allresult;
+    } catch (error) {
+        console.error("GPTの応答取得に失敗しました", error);
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "GPTからの応答取得に失敗しました。" } };
     }
-    return allresult;
 
     /*
     note:weatherTodayは藤沢市の天気を、以下の要領で出力します
@@ -130,7 +138,7 @@ export async function SFCFlow(username, classPeriod) {
         console.log(weatherToday);
     } catch (error) {
         console.error("天気の取得に失敗しました", error);
-        return;
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "天気の取得に失敗しました。" } };
     }
 
     //time.jsによる時刻と曜日取得
@@ -140,7 +148,7 @@ export async function SFCFlow(username, classPeriod) {
         console.log(timeNow);
     } catch (error) {
         console.error("時間の取得に失敗しました", error);
-        return;
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "時間の取得に失敗しました。" } };
     }
 
 
@@ -154,15 +162,19 @@ export async function SFCFlow(username, classPeriod) {
     // 最終的のOpenAI APIからのResponse
     // paramter in gptResponse() --> { weather, period, userTime }
     console.log("GPTが考え中！")
-    const raw = await gptResponse(payload); // Promiseを解決
-    const gptResult = raw;
-    console.log(gptResult);
+    try {
+        const gptResult = await gptResponse(payload); // Promiseを解決
+        console.log(gptResult);
 
-    const allresult = {
-        "weather": weatherToday,
-        "gptResult": gptResult,
+        const allresult = {
+            "weather": weatherToday,
+            "gptResult": gptResult,
+        }
+        return allresult;
+    } catch (error) {
+        console.error("GPTの応答取得に失敗しました", error);
+        return { gptResult: { ETA: "エラー", risk: "エラー", comment: "GPTからの応答取得に失敗しました。" } };
     }
-    return allresult;
     //database.jsを呼ぶ
     //gpt.jsを呼ぶ
 }
