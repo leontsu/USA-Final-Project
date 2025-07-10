@@ -57,12 +57,48 @@ export async function ShonandaiFlow(username, classPeriod) {
 
     //api.jsを呼ぶ
     //weatherTodayが今日の天気です。
+    console.log("これはテスト用");
+
+    //api.jsによる天気検索
+    let weatherToday;
     try {
-        const weatherToday = await GetWeatherFromAPI();
+        weatherToday = await GetWeatherFromAPI();
         console.log(weatherToday);
     } catch (error) {
         console.error("天気の取得に失敗しました", error);
+        return;
     }
+
+    //time.jsによる時刻と曜日取得
+    let timeNow;
+    try {
+        timeNow = await GetCurrentTime();
+        console.log(timeNow);
+    } catch (error) {
+        console.error("時間の取得に失敗しました", error);
+        return;
+    }
+
+
+    const payload = {
+        "weather": weatherToday,
+        "period": classPeriod,
+        "userTime": timeNow,
+    }
+    console.log(payload);
+
+    // 最終的のOpenAI APIからのResponse
+    // paramter in gptResponse() --> { weather, period, userTime }
+    console.log("GPTが考え中！")
+    const raw = await gptResponse(payload); // Promiseを解決
+    const gptResult = raw;
+    console.log(gptResult);
+
+    const allresult = {
+        "weather": weatherToday,
+        "gptResult": gptResult,
+    }
+    return allresult;
 
     /*
     note:weatherTodayは藤沢市の天気を、以下の要領で出力します
@@ -85,13 +121,48 @@ export async function ShonandaiFlow(username, classPeriod) {
 export async function SFCFlow(username, classPeriod) {
     console.log("main.htmlから、位置情報がSFCだったので、SFCFlowが呼び出されました");
     //api.jsを呼ぶ
+    console.log("これはテスト用");
+
+    //api.jsによる天気検索
+    let weatherToday;
     try {
-        const weatherToday = await GetWeatherFromAPI();
+        weatherToday = await GetWeatherFromAPI();
         console.log(weatherToday);
     } catch (error) {
         console.error("天気の取得に失敗しました", error);
+        return;
     }
 
+    //time.jsによる時刻と曜日取得
+    let timeNow;
+    try {
+        timeNow = await GetCurrentTime();
+        console.log(timeNow);
+    } catch (error) {
+        console.error("時間の取得に失敗しました", error);
+        return;
+    }
+
+
+    const payload = {
+        "weather": weatherToday,
+        "period": classPeriod,
+        "userTime": timeNow,
+    }
+    console.log(payload);
+
+    // 最終的のOpenAI APIからのResponse
+    // paramter in gptResponse() --> { weather, period, userTime }
+    console.log("GPTが考え中！")
+    const raw = await gptResponse(payload); // Promiseを解決
+    const gptResult = raw;
+    console.log(gptResult);
+
+    const allresult = {
+        "weather": weatherToday,
+        "gptResult": gptResult,
+    }
+    return allresult;
     //database.jsを呼ぶ
     //gpt.jsを呼ぶ
 }
