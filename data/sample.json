@@ -1,4 +1,62 @@
 [
-    { "day": "Monday", "weather": "Rain", "duration": 25 },
-    { "day": "Tuesday", "weather": "Clear", "duration": 20 }
-  ]
+  {
+    "day": "月",
+    "weather": "Clouds曇り",
+    "departtime": "10:44:00 AM",
+    "arrivetime": "11:10:00 AM"
+  },
+  {
+    "day": "月",
+    "weather": "Clear 快晴",
+    "departtime": "9:03:00 AM",
+    "arrivetime": "9:28:00 AM"
+  },
+  {
+    "day": "木",
+    "weather": "Clear 快晴",
+    "departtime": "10:19:00 AM",
+    "arrivetime": "10:44:00 AM"
+  },
+  {
+    "day": "木",
+    "weather": "Clear 快晴",
+    "departtime": "10:22:00 AM",
+    "arrivetime": "10:44:00 AM"
+  },
+  {
+    "day": "金",
+    "weather": "Clear 快晴",
+    "departtime": "10:19:00 AM",
+    "arrivetime": "10:45:00 AM"
+  },
+  {
+    "day": "月",
+    "weather": "Clear 快晴",
+    "departtime": "8:35:00 AM",
+    "arrivetime": "8:57:00 AM"
+  },
+  {
+    "day": "火",
+    "weather": "Clouds曇り",
+    "departtime": "8:24:00 AM",
+    "arrivetime": "8:50:00 AM"
+  },
+  {
+    "day": "火",
+    "weather": "Clouds曇り",
+    "departtime": "10:38:00 AM",
+    "arrivetime": "11:00:00 AM"
+  },
+  {
+    "day": "火",
+    "weather": "Rain雨",
+    "departtime": "10:40:00 AM",
+    "arrivetime": "11:15:00 AM"
+  },
+  {
+    "day": "火",
+    "weather": "Clouds曇り",
+    "departtime": "10:30:00 AM",
+    "arrivetime": "11:03:00 AM"
+  }
+]
