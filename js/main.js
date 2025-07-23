@@ -2,8 +2,6 @@ import { TestFlow, ShonandaiFlow, SFCFlow } from "./processcontrol.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-
-
     // これから操作するHTML要素を、idを元に探し出して変数に格納しておく。
     const userForm = document.getElementById('user-form');
     //const predictButton = document.getElementById('predict-button');（不要）
@@ -25,25 +23,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     let username;
     let classPeriod;
 
-
-
-
-
-
     const displayWeather = document.getElementById('display-weather');
     const predictedTime = document.getElementById('predicted-time');
     const riskDisplay = document.getElementById('risk-display');
     const commentText = document.getElementById('comment-text');
 
-
-
-
     userForm.addEventListener('submit', async (event) => {
-
-
         // formのデフォルトの送信機能を無効にする（ページがリロード防止）
         event.preventDefault();
-
 
         if ("geolocation" in navigator) {
             // 現在地を取得する
@@ -88,8 +75,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 基準点と現在地の距離を計算（メートル単位）
         const distance_SHONANDAI = getDistance(userLat, userLon, SHONANDAI_LAT, SHONANDAI_LON);
         const distance_SFC = getDistance(userLat, userLon, SFC_LAT, SFC_LON);
-
-
 
         let allResult;
 

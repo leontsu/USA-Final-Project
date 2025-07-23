@@ -125,6 +125,7 @@ export async function ShonandaiFlow(username, classPeriod) {
 
     //gpt.jsを呼ぶ
 }
+// -------- 湘南台からの処理だけだったらSFCFlowいらない？----------
 
 export async function SFCFlow(username, classPeriod) {
     console.log("main.htmlから、位置情報がSFCだったので、SFCFlowが呼び出されました");
