@@ -4,8 +4,8 @@ export async function gptResponse(payload) {
     throw new Error("gptResponse expects an object payload");
   }
 
-  try { // <-- ここから追加
-    const res = await fetch('/api/gpt',{ // URLはこれでOKです
+  try {
+    const res = await fetch('/api/gpt',{ 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -19,7 +19,7 @@ export async function gptResponse(payload) {
 
     const data = await res.json();
     return data;
-  } catch (error) { // <-- ここまで追加
+  } catch (error) { 
     console.error("gptResponseでのエラー:", error); // この行が重要
     // ここでエラーを再スローすることで、processcontrol.jsでキャッチしやすくなります
     throw new Error(`GPTレスポンスの取得に失敗しました: ${error.message}`);

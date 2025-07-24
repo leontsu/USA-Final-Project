@@ -74,7 +74,7 @@ async function getEta({ weather, period, userTime }) {
     }
   ];
   const completion = await openai.chat.completions.create({
-    model: "gpt-4.1",
+    model: "gpt-4o",
     response_format: { type: "json_object" },
     messages
   });
