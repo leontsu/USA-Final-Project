@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-// あらゆるエラーを捕まえるための最終手段
+// ★★★ あらゆるエラーを捕まえるための最終手段 ★★★
 process.on('unhandledRejection', (reason, promise) => {
   console.error('CRITICAL: Unhandled Rejection at:', promise, 'reason:', reason);
 });
@@ -9,9 +9,11 @@ process.on('uncaughtException', (err, origin) => {
   console.error('CRITICAL: Uncaught Exception:', err, 'origin:', origin);
 });
 
-// パス問題を解決
+// ★★★★★★★ 修正点 ★★★★★★★
+// sample.jsonへのパスを、誰がどこから実行しても間違えない「絶対パス」に修正します。
 const filePath = '/var/www/html/USA-Final-Project/data/sample.json';
 const historicalRecords = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+// ★★★★★★★★★★★★★★★★★★★★
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -51,7 +53,7 @@ async function getEta({ weather, period, userTime }) {
     }
   ];
   const completion = await openai.chat.completions.create({
-    model: "gpt-4o", // 正しいモデル名
+    model: "gpt-4o", // モデル名はOKです
     response_format: { type: "json_object" },
     messages
   });
@@ -78,7 +80,7 @@ app.post('/api/gpt', async (req, res) => {
     }
     return res.json(responseData);
   } catch (err) {
-    // ★★★ 最後の念押しで、エラーログを詳細に出力 ★★★
+    // エラーログを詳細に出力
     console.error("APIルートで致命的なエラー:", err);
     return res.status(500).json({
       ETA: "00:00",
